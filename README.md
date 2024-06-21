@@ -1,4 +1,4 @@
-<!-- v 0.1 - duplicated from cashu.space documentation sprint 2k24-->
+<!-- v 0.2 - imported and fixed from cashu.space documentation sprint 2k24-->
 
 # BE YOUR OWN MINT GUIDE
 
@@ -51,8 +51,20 @@ To complete any installation of a cashu mint on a Linux you will need the follow
 
 Covered in this guide are the following mainstream Linux distributions: Ubuntu, Debian, ...
 
+### Windows
 
------ Nutshell CLIENT ------
+ipsum lorem
+
+### Mac OSx
+
+ipsum lorem
+
+### Raspberry Pi/ARM
+
+ipsum lorem
+
+
+## [ Nutshell CLIENT ]
 
 ***Nutshell***
 Cashu Nutshell is a Chaumian Ecash wallet and mint for Bitcoin Lightning. Cashu Nutshell is the reference implementation in Python.
@@ -64,7 +76,7 @@ Cashu Nutshell is a Chaumian Ecash wallet and mint for Bitcoin Lightning. Cashu 
 
 ### Installing Nutshell on Linux
 
-## Easy Install
+#### Easy Install
 
 The easiest way to use Cashu is to install the package it via pip:
 ```bash
@@ -77,7 +89,7 @@ If you have problems running the command above on Ubuntu, run `sudo apt install 
 
 You can skip the entire next section about Poetry and jump right to [Using Cashu](#using-cashu).
 
-## Manual install: Poetry
+#### Manual install: Poetry
 These steps help you install Python via pyenv and Poetry. If you already have Poetry running on your computer, you can skip this step and jump right to [Install Cashu](#poetry-install-cashu).
 
 #### Poetry: Prerequisites
@@ -126,7 +138,8 @@ poetry shell
 ```
 
 If you don't activate your environment, just prepend `poetry run` to all following commands.
-## Configuration
+
+#### Configuration
 ```bash
 mv .env.example .env
 # edit .env file
@@ -142,7 +155,7 @@ Change the appropriate `.env` file settings to
 ```bash
 MINT_URL=https://testnut.cashu.space
 ```
-## Running the mint
+### Running the mint
 Before you can run your own mint, make sure to enable a Lightning backend in `MINT_BACKEND_BOLT11_SAT` and set `MINT_PRIVATE_KEY` in your `.env` file.
 ```bash
 poetry run mint
@@ -194,7 +207,7 @@ For testing, you can use Nutshell without a Lightning backend by setting `MINT_B
 
 
 
------ MOKSHA CLIENT ------
+## [ MOKSHA CLIENT ]
 
 ***Moksha***
 moksha is a cashu library, mint and cli-wallet written in Rust.
@@ -249,7 +262,7 @@ docker-compose up -d app database
 
 ### Installing Moksha from Source (Ubuntu/Debian)
 
-### Setup rust
+#### Setup rust
 
 ```bash
 git clone https://github.com/ngutech21/moksha.git
@@ -258,7 +271,7 @@ rustup component add llvm-tools-preview
 cd moksha
 ```
 
-### Install protobuf for your platform
+#### Install protobuf for your platform
 
 This is needed for the LND backend.
 
@@ -268,7 +281,7 @@ brew install protobuf
 choco install protoc
 ```
 
-### Config
+#### Config
 
 ```bash
 mv .env.example .env
@@ -276,7 +289,7 @@ mv .env.example .env
 vim .env
 ```
 
-### Run mint (cashu-server)
+#### Run mint (cashu-server)
 
 To run the mint you need to setup a lightning regtest environment like [Polar](https://lightningpolar.com) and a Lnbits or Lnd instance. In Lnbits create a new wallet and copy the admin key into the .env file and set the url to your Lnbits instance. The mint uses PostgreSQL for storing used proofs and pending invoices. The database URL can be configured in the .env file.
 
@@ -324,7 +337,7 @@ just run-mint
 ....
 
 
------ gonuts CLIENT ------
+## [ gonuts CLIENT ]
 
 ***gonuts***
 Cashu wallet and mint implementation in Go.
@@ -334,9 +347,64 @@ Cashu wallet and mint implementation in Go.
 #### Official Documentation: https://github.com/elnosh/gonuts/blob/main/README.md
  
 
-### Installing gonuts on Ubuntu
+### Installing gonuts on Linux
 
-...
+With [Go](https://go.dev/doc/install) installed, you can run the following command to install the wallet:
+
+```
+go install github.com/elnosh/gonuts/cmd/nutw@latest
+```
+
+To setup a mint for the wallet, create a `.env` file at ~/.gonuts/wallet/.env and setup your preferred mint.
+
+#### Using the wallet
+
+#### Check balance
+
+```
+nutw balance
+```
+
+#### Create a Lightning invoice to receive ecash
+
+```
+nutw mint 100
+```
+
+This will get an invoice from the mint which you can then pay and use to mint new ecash.
+
+```
+invoice: lnbc100n1pja0w9pdqqx...
+```
+
+#### Redeem the ecash after paying the invoice
+
+```
+nutw mint --invoice lnbc100n1pja0w9pdqqx...
+```
+
+#### Send tokens
+
+```
+nutw send 21
+```
+
+This will generate a Cashu token that looks like this:
+
+```
+cashuAeyJ0b2tlbiI6W3sibW...
+```
+
+This is the ecash that you can then send to anyone.
+
+#### Run mint
+
+- `cd cmd/mint`
+- you'll need to setup a lightning regtest environment with something like [Polar](https://lightningpolar.com/) and fill in the values in the `.env` file
+
+- `go build -v -o mint mint.go`
+
+- `./mint`
 
 #### Libraries & Dependencies
 
@@ -346,9 +414,15 @@ Cashu wallet and mint implementation in Go.
 
 ...
 
-### Just the commands
+#### Just the commands
 
-...
+```go install github.com/elnosh/gonuts/cmd/nutw@latest```
+
+```cd cmd/mint```
+
+```go build -v -o mint mint.go```
+
+```./mint```
 
 #### External Tutorials
 
@@ -376,7 +450,7 @@ Cashu wallet and mint implementation in Go.
 ....
 
 
------ cashu-rs-mint CLIENT ------
+## [ cashu-rs-mint CLIENT ]
 
 ***cashu-rs-mint***
  Cashu mint using CDK 
@@ -386,7 +460,7 @@ Cashu wallet and mint implementation in Go.
 #### Official Documentation: https://github.com/thesimplekid/cashu-rs-mint/blob/main/README.md
  
 
-### Installing cashu-rs-mint using Nix
+#### Installing cashu-rs-mint using Nix
 
 ```
 nix develop
@@ -444,7 +518,7 @@ Start the mint, by default the mint will use ln1
 
 ...
 
-### Just the commands
+#### Just the commands
 
 ```
 nix develop
@@ -511,7 +585,7 @@ nix develop
 ....
 
 
------ Nutmix CLIENT ------
+## [ Nutmix CLIENT ]
 
 ***Nutmix***
 golang implementation of ecash mint 
@@ -521,7 +595,7 @@ golang implementation of ecash mint
 #### Official Documentation: https://github.com/lescuer97/nutmix/blob/master/README.md
 
 
-### Installing Nutmix using Docker
+#### Installing Nutmix using Docker
 
 This project is thought to be able to be ran on a docker container or locally.
 
@@ -553,7 +627,7 @@ If you missed and important variable for the mint. The mint should panic and let
 
 ...
 
-### Just the commands
+#### Just the commands
 
 ``` docker compose up -d ```
 
@@ -588,7 +662,7 @@ I have a special development docker compose called: `docker-compose-dev.yml`. Th
 
 ...
 
-### Just the commands
+#### Just the commands
 
 ``` docker compose -f docker-compose-dev.yml up db ```
 
@@ -618,146 +692,6 @@ I have a special development docker compose called: `docker-compose-dev.yml`. Th
 
 **TBC**
 ....
-
-
-
------ NEWMINT CLIENT ------
-
-***NEWMINT***
-Description ipsume lorem bla bla
-
-#### Support channels for this Mint:
- 
-#### Official Documentation: 
- 
-
-### Installing NEWMINT on Ubuntu
-
-...
-
-#### Libraries & Dependencies
-
-...
-
-#### Stack Requirements
-
-...
-
-### Just the commands
-
-...
-
-#### External Tutorials
-
-...
-
-#### Best Practices 
-
-...
-
-
-
-### Installing NEWMINT on Debian
-
-**TBC**
-
-#### Libraries & Dependencies
-
-...
-
-#### Stack Requirements
-
-...
-
-### Just the commands
-
-...
-
-#### External Tutorials
-
-...
-
-#### Best Practices 
-
-...
-
-
-
-
-
-
-### Installing NEWMINT on Windows
-
-#### Libraries & Dependencies
-
-...
-
-#### Stack Requirements
-
-...
-
-### Just the commands
-
-...
-
-#### External Tutorials
-
-...
-
-#### Best Practices 
-
-...
-
-
-
-
-
-
-### Installing  NEWMINT on Mac OSx
-
-**TBC**
-
-#### Knowledge requirements
-
-...
-
-#### Stack Requirements
-
-...
-
-#### External Tutorials
-
-...
-
-#### Best Practices 
-
-...
-
-
-
-
-
-
-### Installing NEWMINT on Raspberry Pi (ARM)
-
-**TBC**
-
-#### Knowledge requirements
-
-...
-
-#### Stack Requirements
-
-...
-
-#### External Tutorials
-
-...
-
-#### Best Practices 
-
-...
-
 
 
 
